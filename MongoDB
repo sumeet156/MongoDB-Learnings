@@ -1,0 +1,84 @@
+### Introduction to MongoDB:
+                      Connect DB 
+                      CRUD Operation, Aggregation
+                      Search Experience, Transactions
+                      Indexing, Data Modeling 
+
+MongoDB Node.js Developer Path
+
+Unit 01: Getting Started with MongoDB Atlas, the Developer Data Platform
+
+
+
+Lesson 1: Foundations of MongoDB:
+            1. Distributed database: System Architecture - Data shared across machines.
+               If one machine fails, system can still function. Consistent service and reliablity(even in system failure).
+               Store data close to the source. Reduces latency.
+
+            2. Document Model- Similar to JS Object Notation (JSON) : ex: '{
+                                                                             "name":"John", "age":30, "car":null
+                                                                            }'
+                                                                      Defines : name,age,car
+               Users Collection contain user information. Ability to handle polymorphic data and flexibility. 
+               Polymorphic data: data that can take on mmultiple types within the same structure.
+
+             3. Flexible Schema: Each data record can have a unique structure. Permits various data types, unstructured or semi-structured data.
+               Uses: IoT Applications, Mobile Apps, Content Management, AI(Gen Ai) 
+               
+
+
+
+Lesson 2: MongoDB Architecture: a) Document(smallest unit in MongoDB) Obj and any related metadata, Field-value pairs, Data types: strings,num, dates, arrays,objectt and more.
+                        b) Collection: is a grp of Documents taht correspond to an entity. Cam support multiple entities and diff. shapes.
+                        c) Database: A grp of collections
+                        d) Nodes: Individual MongoDB Instance(Physical machine Virtual machine container)
+                        e) Cluster: is grp of MongoDB Nodes: Types- i) Replica Set: High Availability by Replicating 
+                                                                    ii) Sharded: Scaling through Partitioning 
+
+                       a)-->b)-->c)-->d)-->e) 
+
+          2.CAP Theorem: Impossible to simultaneously consistency, avaiability and Partition tolerance.
+              • Consistency: Every read receives the most recent write or an error.
+              • Availability: Every Request(read or write) receives a response even if might not most recent or correct data.
+              • Patition Tolerance: System continues to function despite network partitions.
+
+            In this distributed db any 2 is done.
+
+                 • High Availablity: Replication - Storing multiple copies of data and keeping them syncronize across multiple node to provide redundancy it should run even 
+                                                    one of nodes gets off its available from other DB.
+                  A grp of MongoD instances that maintain the same data set
+                  MongoD: is the primary daemon process
+
+                 • Consistency: read and write concerns - Read: controls consistency and isolation of data read from replica sets or sharded clusters. Default set- local
+                                                          Write: number of replica set members that must confirm a write operation. Defaultn set- Majority
+                
+                 • Scaling: Sharding - Mechanism is used to scale it is sharded into multiple diff. nodes 
+                                       Provides horizontal scalability. You can add more shards to distribute data
+                                       Requires careful planning its complex
+
+Lesson 3: Atlas Overview
+
+
+
+
+
+
+
+Unit 02: Overview of MongoDB and the Document Model
+Unit 03: Connecting to a MongoDB Database
+Unit 04: MongoDB CRUD Operations: Insert and Find Documents
+Unit 05: MongoDB CRUD: Replace and Delete
+Unit 06: MongoDB CRUD Operations: Modifying Query Results
+Unit 07: MongoDB Aggregation
+Unit 08: MongoDB Indexing
+Unit 09: MongoDB Atlas Search
+Unit 10: Introduction to MongoDB Data Modeling
+Unit 11: MongoDB Transactions
+
+
+
+
+
+
+
+
