@@ -56,15 +56,21 @@ Lesson 2: MongoDB Architecture: a) Document(smallest unit in MongoDB) Obj and an
                                        Provides horizontal scalability. You can add more shards to distribute data
                                        Requires careful planning its complex
 
-Lesson 3: Atlas Overview
+Lesson 3: Atlas Overview is DBaas as a service : Download and install config the DB and infrastruture
+          Cloud infrastructure - Cloud-based , deploying , remove all operational overhead, support development lifecycle 
+                                runs on all cloud AWS, Microsoft Azure. Select AWS region and Availability zones(latency kam karta hai, speed increases), if one fails other handles
+          Security Features - Supports Multi verification- Authorization : Role-Based Access control (RBAC), Specific roles for users so they only have access to what they need
+                              HIPAA , GDPR , SOC2 type II etc are security majors
+                              Network Isolation: only authorize person can communicate with DB , Deployments are created within a virtual private cloud (VPC), encrypted in motion, rest and use
+                              
+
+Lesson 4: Deploying an Atlas Cluster: Organizations- Grp and define users and teams --> Grant access to projects 
+                                      Projects- Define and organize db and clusters --> Create seperate projects for development, testing, and production
+          
+
+• Getting Started with MongoDB Atlas: Get hands dirt with UI  
 
 
-
-
-
-
-
-Unit 02: Overview of MongoDB and the Document Model
 Unit 03: Connecting to a MongoDB Database
 Unit 04: MongoDB CRUD Operations: Insert and Find Documents
 Unit 05: MongoDB CRUD: Replace and Delete
