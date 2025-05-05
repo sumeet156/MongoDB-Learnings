@@ -1,0 +1,54 @@
+Unit 02: Overview of MongoDB and the Document Model 
+
+ Lesson 1: Overview of the Document Model:
+           Document Structure: Document< Collection< Database< Node< Cluster
+                               - Every MongoDB Doc. begins and ends with curly brace {} inside that data is there with values
+                                Fields: username -ex:sumeet , Values:(Strings,numbers,booleans, arrays and document obj) it stores diverse data 
+
+           JSON vs. BSON: JSON - Javascript Object Notation: Text-based, Human-readable, Slower to parse, Usually smaller, Fewer types (e.g., string, number)
+                          BSON - (Extension of JSON) Binary JSON: Binary format, Not human-readable, Faster parsing (due to binary structure), 	Slightly larger (includes metadata), More types (e.g., date, binary, int32) 
+                                  Lightweight, Traversal and efficient also provides additional data types like Dates, ObjectId, Timestamps
+
+           Polymorphic data: Data that are different shapes and types within collection, due to flexible schema key characteristic of MongoDB's document model that allows for handling polymorphic data
+                             Key-value pairs, text, Geospatial data, Time-series, Graph data. Ease of adding new field you can add them 
+
+           Limits: Max doc. size of 16 MB , Max 100 levels of nesting 
+ 
+
+  Lesson 2: Data Types in MongoDB:
+            JSON make it easy to access, navigate, manupulate data it also supports many data types.
+            Data Types supported by BSON: 
+                i. Boolean: true or false
+                ii. Null: unknown values
+               iii. Strings: Characters that represents text (single or double quotes)
+                iv. Number: intergers or floating point values. Int32- 32-bit, Int64- 64-bit, Double or Decimal128
+                 v. Object: Curly braces encapsulated with Key-value pairs, embed documents
+                vi. Array: Square barackets, Grp of values, any data type
+               vii. Dates: Represented as a timestamp, Efficient for quering and sorting knows as Epoch(Jan 1 1970). Compact, efficient for storage, easy to convert, Fast comparisons and computations
+              viii. ObjectId: _id unique indentifier, must be unique, MongoDB will automatically generate unique ObjecyId for _id
+                              consist of Timestamp Random Value and incrementing counter that increse with id
+
+
+  Lesson 3: Managing Databases, Collections, and Documents in Atlas
+         Atlas -> Navigate data-> Add documents-> Perform a query
+
+         Create database-> enter Database name -> collection name (db name) create-> insert document enter the key-value pairs according to you db
+
+
+  Lesson 4: Data Relationships
+         i. Entities: Each piece of info. or DB is related to other piece of info. or DB. Unique and independent, Represented by documents, Grouped in collection. ex: Comment entity, Movie Entity
+        ii. Attributes: Charcteristics that describe an entity, field-valued pairs. ex: title , cast
+       iii. Relationships: 1:1 - Most common in MDB one entity is exactly related to one entity. ex: A movie relesed by single studios
+                           1:M - one entity is related to multiple other entities. ex: movies has many cast
+                           M:M - Multiple entities are related to multiple other entities. ex: movies is shown in many theaters(who shows many diff. movies)
+
+
+  Lesson 5: Embedding and Referencing
+         i. Embedding: 1:1 -> Use embedding , Keeps data together, Simplifies queries. Ex: Studios : Movies
+                       1:M -> Embedding preferred for one-to-many, use references for: , large datasets, Data often accessed independently. Ex. Movies: Cast:[](we can refer the _id of each cast to other db)
+                       M:M -> Embed or reference according to your requirement (u can use combination). Ex: Movies (theaters:[]) : Theaters (movies_showing:[]) -> embed with reference _id
+           Access as single unit. Small, fixed-size related data. minimize db operations
+        ii. Referencing: Large and complex data managed independent access. Large growing documents
+
+max size 16Mb Limit of 100 lvl of nesting we consider planning to manage db 
+            
