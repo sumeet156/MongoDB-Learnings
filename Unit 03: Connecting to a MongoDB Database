@@ -1,8 +1,65 @@
 MongoDB Data Modeling Intro
 
     Lesson 1: Introduction to Data Modeling
-              
+       - Purpose of data Modeling: What does my application do?
+                                   What data will I store?
+                                   How will users access this data?
+                                   What data will be most valuable to me?
+             This helps your tasks as well as those of users. what your data looks like. The relationship among the data.
+             The tooling you plan to have. The access patterns that might emerge
+         A good data Model can: Make it easier to manage data, Make queries more efficient, Use less memory and CPU, Reduce costs.
+                                
+    Lesson 2: Types of Data Relationship - Structure your data to match the ways that your application queries and updates it
+       Data that is accessed together should be stored together.
+        - 1:1  Relationship where a data entity is one set is connected to exactly one data entity in another set. 
+        - 1:M  Relationship where a data entity is one set is connected to ANY NUMBER of Data entities in another set. Ex. Cast -> Many actors
+        - M:M  Relationship where any number Of data entities in one set are connected to any number of data entities in another set. 
+     
+    Embedding: We take related data and insert it into our document
+    Referencing: We refer to documents in another collection in our document
+
+    Lesson 3: Modeling Data Relationships - we can represent relationship in many ways: by inserting data into the document, embedding it, or linking it with a refernce.
+              Embedding - Ex. Array of phone number Home, Father , emergency in an Array
+ 
+    Lesson 4: Embedding Data in Documents :used when you have 1:1, one-to-many or many-to-many relationships in the data that's being stored
+              Ex. {name :
+                         {firstName: "Sarah", lastName: "Davis"}
+                  }
+             - Data that is accessed together - should be stored together
+             -  Avoids application joins
+             - Provides better performance for read operations
+             - Allows developers to update related data in a single write operation
+
+            warning: - Embedding data into a single document can create large documents.
+                     - Large documents have to be read into memory in full, which can result in a slow application performance for your end user.
+                     - Continuously adding data without limit creates unbounded documents
+                     - Unbounded documents may exceed the BSON document threshold of 16 MB.
+             
+    Lesson 5: Referencing Data in Documents - Save the _ id field of one document in another document as a link between the two. 
+                                              simple and sufficient for most use cases. Using references is called linking or data normalization
+             Referencing: No duplication of data, smaller documents, Querying from multiple documents costs extra resources and impacts read performance.
+           
+    Lesson 6: Scaling a Data Model - Optimum efficiency of: Query result times, Memory usage, CPU usage, Storage
+              Unbounded documents are documents that grow infinitely. (this happens when we use document emdedding)
+              Problems as the array grows larger: It will take up more space in memory. May impact write performance.
+                                                  Difficult to perform pagination of comments. Maximum document size of 16 MB will lead to storage problems.
+              Break data into multiple references to retrive data.
+              Avoid: More than doc size limit of 16MB, Poor query/write performance, Too much memory being used.
+
+    Lesson 7: Using Atlas Tools for Schema Help - 
+              Schema anti-patterns-  Schema design patterns are guidelines that help developers plan, organize,and model data.
+                            Common schema anti-pattern: Massive arrays, Massive number of collections, Bloated documents, Unnecessary indexes
+                                                        Queries without indexes. Data that's accessed together, but stored in different collections                  
+              MongoDB tools in Atlas - 
+                         i)Data Explorer - Collection is data explorer- indexes schema-anti pattern tab etc
+                         ii)Performance Advisor - look recommendations to improve schema.
 
 
+
+
+
+Connecting to a MongoDB Database
+
+     Lesson 1: Using MongoDB Connection Strings
 
 
