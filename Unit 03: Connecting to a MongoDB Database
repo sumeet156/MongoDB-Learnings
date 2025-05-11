@@ -62,4 +62,34 @@ Connecting to a MongoDB Database
 
      Lesson 1: Using MongoDB Connection Strings
 
+               How to use the connection string: Mongo Shell, Compass, Applications
+                              Standard format: Used to connect tostandalone clusters, replica sets, or sharded clusters
+                              DNS Seed List format: Provides a DNS server list to our connection string
+                                                    Gives more flexibility of deployment
+                                                    Ability to change servers in rotation without reconfiguring clients
+                            To connect -> click Connect-> Connect to your application-> Drivers->follow the process
+
+               where to locate the connection string
+               what the string consist of
+
+     Lesson 2: Connecting to a MongoDB Atlas Cluster with the Shell: click Connect-> Shell
+               Node.js REPL environment -> js code
+
+
+     Lesson 3: Connecting to a MongoDB Atlas Cluster with Compass: MongoDB Compass is a graphical user interface, or GUI, that allows us to query and analyze our data,
+               and compose aggregation pipelines.
+        - Connect From MongoDB Compass
+        - View and interact with your data using Compass
+               
+     Lesson 4: Connecting to a MongoDB Atlas Cluster from an Application: MongoDB drivers connect our application to our database by using a connection string: mongodb.com/docs/drivers
+               MongoDB drivers provide a way to connect our database with our application.
+
+     Lesson 5: Troubleshooting MongoDB Atlas Connection Errors
+                    Network access errors 
+                    User authentication errors
+
+              For user network access errors, use the Atlas dashboard to add your IP address to the Network Access tab.
+              MongoDB doesn't autofill your password field in the connection string, so make sure the password is populated and correct
+              before connecting.
+
 
