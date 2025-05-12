@@ -1,12 +1,41 @@
     MongoDB CRUD Operations: Insert and Find Documents
 
           Lesson 01: Inserting Documents in a MongoDB Collection
-                     
-
+                     insertOne() - db.<collection>.insertOne() , db.grades.insertOne()
+                          _id field Unique id Auto-generated
+                     insertMany() - db.<collection>.insertMany([
+                                            <document1>,
+                                            <document2>,
+                                            <document3>
+                                          ])
 
           Lesson 02: Finding Documents in a MongoDB Collection
+                     find() - db.<collection>.find()
+                              Ex. use training 
+                                -> db.zips.find()
+                                
+                     $in - The $in operator allows us to select all documents that have a field value equal to any of the values specified in the array.
+                           {field: {$eq: <value> }}
+                           { field: <value> }
+                       ex. db.zips.find({state: "AZ"})
+                           db.sales.find({ storeLocation: { $in: ["London", "New York"] } })
 
-          Lesson 03: Finding Documents by Using Comparison Operators
+                - Use the $eq operator to find documents with a field and value
+                - Use the $in operator to select documents equal to the values specified in the array
+
+
+          Lesson 03: Finding Documents by Using Comparison Operators: <field>: {<operator>: <value>}
+                     • $gt(greater than)- Returns documents where the field contains a value greater than the specified value.
+                                        db.sales.find({ "item.price":{$gt:50}})
+
+                     • $lt(less than)- db.sales.find({ "item.price":{$lt:50}})
+
+                     • $lte(less than or equal to)- Returns all documents less than or equal to a given number.
+                                                  db.sales.find({ "customer.age":{$lte:65}})
+
+                     • $gte(greater than or equal to)- db.sales.find({ "customer.age":{$gte:65}})
+                     link: https://www.mongodb.com/docs/manual/reference/operator/query-comparison/
+
 
           Lesson 04: Querying on Array Elements in MongoDB
 
