@@ -1,0 +1,35 @@
+    MongoDB CRUD Operations: Modifying Query Results
+             
+             Lesson 01: Sorting and Limiting Query Results in MongoDB
+                cursor: Pointer to the result set of a query. find() returns a cursor
+                cursor methods : Chained to queries
+                                 Perform actions on the result set
+               Sorting: Use cursor.sort() to return query results in a specified order. Within the parentheses of sort(), 
+                        include an object that specifies the field(s) to sort by and the order of the sort. Use 1 for ascending order,
+                        and -1 for descending order.
+
+                    Ex. db.collection.find(<query>).sort(<sort>)
+
+                    ex. // Return data on all music companies, sorted alphabetically from A to Z.
+                       db.companies.find({ category_code: "music" }).sort({ name: 1 });
+
+                   • To ensure documents are returned in a consistent order, include a field that contains unique values in the sort.
+                    An easy way to do this is to include the _id field in the sort.
+
+                    // Return data on all music companies, sorted alphabetically from A to Z. Ensure consistent sort order
+                    db.companies.find({ category_code: "music" }).sort({ name: 1, _id: 1 });
+
+ 
+                     - cursor.limit() : Use cursor.limit() to specify the maximum number of documents the cursor will return. Within the parentheses of limit(),
+                                        specify the maximum number of documents to return.
+                         Ex. db.companies.find(<query>).limit(<number>)
+                             // Return the three music companies with the highest number of employees. Ensure consistent sort order.
+                                db.companies
+                                     .find({ category_code: "music" })
+                                     .sort({ number_of_employees: -1, _id: 1 })
+                                     .limit(3);
+
+             Lesson 02: Returning Specific Data from a Query in MongoDB
+
+
+             Lesson 03: Counting Documents in a MongoDB Collection
