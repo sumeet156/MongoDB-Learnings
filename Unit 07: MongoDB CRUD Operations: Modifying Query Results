@@ -29,7 +29,46 @@
                                      .sort({ number_of_employees: -1, _id: 1 })
                                      .limit(3);
 
-             Lesson 02: Returning Specific Data from a Query in MongoDB
+             Lesson 02: Returning Specific Data from a Query in MongoDB: To specify fields to include or exclude in the result set, add a projection document as the second parameter in the call to db.collection.find()
+
+                       - Projection: Selecting fields to return in our result. db.collection.find(<query> , <projection>)
+                             Inclusion & exclusion statements can't be combined in projections. _id field is an exception
+                                - Include: db.collection.find(<query>, { <field>:l, <field>:l} )
+                                   // Return all restaurant inspections - business name, result, and _id fields only
+                                      db.inspections.find(
+                                      { sector: "Restaurant - 818" },
+                                      { business_name: 1, result: 1 }
+                                     )     
+
+                                - Exclude: db.collection.find(<query>, { <field>:0, <field>:0} )
+                                    // Return all inspections with result of "Pass" or "Warning" - exclude date and zip code
+                                      db.inspections.find(
+                                      { result: { $in: ["Pass", "Warning"] } },
+                                      { date: 0, "address.zip": 0 }
+                                     )
+        
+                                - While the _id field is included by default, it can be suppressed by setting its value to 0 in any projection.
+                                    // Return all restaurant inspections - business name and result fields only
+                                       db.inspections.find(
+                                       { sector: "Restaurant - 818" },
+                                       { business_name: 1, result: 1, _id: 0 }
+                                      )
+
+                     Ex.       db.sales.find({ "customer.age": { $lt: 30 }, "customer.satisfaction": { $gt: 3 }, }, { "customer.satisfaction": 1, "customer.age": 1, "storeLocation": 1, "saleDate": 1, "_id": 0, });
+                               db.sales.find({ storeLocation: { $in: ["Seattle", "New York"] }, }, { couponUsed: 0, purchaseMethod: 0, customer: 0, })
 
 
-             Lesson 03: Counting Documents in a MongoDB Collection
+             Lesson 3: Counting Documents in a MongoDB Collection : Use db.collection.countDocuments() to count the number of documents that match a query. countDocuments() takes two parameters: a query document and an options document.
+                     - count Documents: db.collection.countDocuments(,<query>, <options>) 
+                              Ex. // Count number of docs in trip collection
+                                     db.trips.countDocuments({})
+                                 // Count number of trips over 120 minutes by subscribers
+                                     db.trips.countDocuments({ tripduration: { $gt: 120 }, usertype: "Subscriber" })           
+                                        
+
+
+
+
+
+
+
