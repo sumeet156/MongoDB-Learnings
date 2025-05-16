@@ -1,20 +1,157 @@
   MongoDB Aggregation
 
         Lesson 01: Introduction to MongoDB Aggregation
-                 - 
-                 -
+                 - Aggregation: Collection and summary of data
+                 - Stage: One of the built-in methods that can be completed on the data, but does not permanently alter it
+                 - Aggregation pipeline: A series of stages completed on the data in order
+             ex. Structure of an Aggregation Pipeline
+db.collection.aggregate([
+    {
+        $stage1: {
+            { expression1 },
+            { expression2 }...
+        },
+        $stage2: {
+            { expression1 }...
+        }
+    }
+])
+
+
 
 
         Lesson 02: Using $match and $group Stages in a MongoDB Aggregation Pipeline
+                - $match :  The $match stage filters for documents that match specified conditions.
+{
+  $match: {
+     "field_name": "value"
+  }
+}
+
+                - $group : The $group stage groups documents by a group key.
+{
+  $group:
+    {
+      _id: <expression>, // Group key
+      <field>: { <accumulator> : <expression> }
+    }
+ }
+
+Ex: 
+        db.zips.aggregate([
+          {   
+            $match: { 
+            state: "CA"
+             }
+           },
+           {
+               $group: {
+               _id: "$city",
+               totalZips: { $count : { } }
+              }
+             }
+            ])
+
 
 
         Lesson 03: Using $sort and $limit Stages in a MongoDB Aggregation Pipeline
+                - $sort: Sorts all input documents and passes them through pipeline in sorted order
+                        1: Ascending order
+                       -1: Descending order
+                     Order of stages¯matters!
+{
+    $sort: {
+        "field_name": 1
+    }
+}
+
+
+
+                - $limit: The $limit stage returns only a specified number of records.
+{
+  $limit: 5
+}        
+
+  Ex. $sort and $limit in Aggregation pipeline
+db.zips.aggregate([
+{
+  $sort: {
+    pop: -1
+  }
+},
+{
+  $limit:  5
+}
+])
+
+
 
 
         Lesson 04: Using $project, $count, and $set Stages in a MongoDB Aggregation Pipeline
+                 - $project: Determine output shape, Projection similar to find() operations. Should be the last stage to format the output       
+                             where <value> is 1 to include and 0 to exclude, new value specified for new fields and existing fields being given a new value
+$project:{
+    <field>:1,
+    <field>:0,
+    ...
+    <field>:<value>
+}
+ Ex.
+{
+    $project: {
+        state:1, 
+        zip:1,
+        population:"$pop",
+        _id:0
+    }
+}
 
 
+
+                 - $set: Adds or modifies fields in the pipeline. Useful when we want to change existing fields in pipeline or add new ones to be used in upcoming pipeline stages     
+ex.
+{
+    $set: {
+        place: {
+            $concat:["$city",",","$state"]
+        },
+        pop:10000
+     }
+  }
+
+
+                 - $count: Counts documents in the pipeline. Returns the total document count
+   $count:<field_name>
+
+ex. 
+{
+  $count: "total_zips"
+}
+
+
+          • $set is used to create or change values of new or existing fields. $project can be used to create
+            or change the value of fields, but it can also be used to specify which fields to show in the
+            documents in the aggregation pipeline.
+          • The $count stage returns a document with a field named in the parameters with the value set to the number of documents at this stage in the aggregation pipeline.
+
+     
         Lesson 05: Using $out Stage in a MongoDB Aggregation Pipeline
+                 - $out: Writes the documents that are returned by an aggregation pipeline into a collection
+                         Must be the last stage
+                         Creates a new collection if it does not already exist
+                         If collection exists, $out replaces the existing collection with new data
+                    Store the aggregation output into a collection
+$out:{
+  db:"<db>",
+coll:"<newcollection>"
+}
+
+or
+
+{$out: "<newcollection>"}
+
+
+
 
 
 
