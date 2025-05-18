@@ -1,19 +1,195 @@
 MongoDB Indexes
 
       Lesson 1 – Using MongoDB Indexes in Collections
-              - 
+              - Indexes are data structures that improve performance, support efficient equality matches and range-based query operations, and can return sorted results. Indexes achieve this by allowing MongoDB to perform only the work necessary 
+                to return the data that is requested, rather than scanning the entire collection.
+              - Indexes help make querying faster for users by only scanning the indexes to find the data that is requested.
+              - Indexes improve query performance at the cost of write performance. For most use cases, this tradeoff is acceptable. Indexes should be used on data that is frequently queried or on queries that are infrequent but costly in terms of computational resources.
+
+          - Types:
+             i. Single field index: A single field index is an index on a single field of a document. MongoDB creates a single field index on the _id field by default, but additional indexes may be needed for other fields as well. A single field index can also be a multikey index if it operates on an array field.
+            ii. Compound index: MongoDB supports compound indexes, where a single index structure holds references to multiple fields within a collection's documents. A compound index is created by specifying the fields that the index should reference, followed by the order in which the fields should be sorted. 
+                                The order of the fields in the index is important because it determines the order in which the documents are returned when querying the collection. A compound index can also be a multikey index if one of the fields is an array.
+           iii. Multikey index: A multikey index is an index on an array field. Each element in the array gets an index key, which supports efficient querying against array fields. Both single field and compound indexes can have an array field, so there are both multikey single field indexes and multikey compound indexes.
 
 
       Lesson 2 – Creating a Single Field Index in MongoDB
-              - 
+              - Create a single-field index by using createlndex() : Index on single field. Support queries and sort on a single field
+                               db.coll.createIndex({fieldname:1})
+                               db.customers.createIndex({
+                                  birthdate: 1
+                                })
+
+              - Enforce uniqueness: Add {unique:true} as a second, optional, parameter in createIndex() to force uniqueness in the index field values. Once the unique index is created, any inserts or updates including duplicated values in the collection for the index field/s will fail.
+db.customers.createIndex({
+  email: 1
+},
+{
+  unique:true
+})
+
+
+              - Identify indexes by using getlndexes(): Use getIndexes() to see all the indexes created in a collection.
+db.customers.getIndexes()
+
+              - Determine the indexes being used in a query by using explain()
+Use explain() in a collection when running a query to see the Execution plan. This plan provides the details of the execution stages (IXSCAN , COLLSCAN, FETCH, SORT, etc.)
+
+     • The IXSCAN stage indicates the query is using an index and what index is being selected.
+     • The COLLSCAN stage indicates a collection scan is perform, not using any indexes.
+     • The FETCH stage indicates documents are being read from the collection.
+     • The SORT stage indicates documents are being sorted in memory.
+
+db.customers.explain().find({
+  birthdate: {
+    $gt:ISODate("1995-08-01")
+    }
+  })
+
+db.customers.explain().find({
+  birthdate: {
+    $gt:ISODate("1995-08-01")
+    }
+  }).sort({
+    email:1
+    })
+
+
+
 
       Lesson 3 – Creating a Multikey Index in MongoDB
-              - 
+              - Any index where one of the indexed fields contains an array
+              - The array can hold nested objects or other field types
+              - In a compound index, only one field can be an array per index
+
+           The maximum number of array fields per multikey index is 1. If an index has multiple fields, only one of them can be an array.
+
+// create a multikey index on the `transfers_complete` field:
+db.accounts.createIndex({ transfers_complete: 1 })
+
+// use the explain followed by the find method to view the winningPlan for a query that finds a specific `completed_transfers` array element
+db.accounts.explain().find({ transfers_complete: { $in: ["TR617907396"] } })
+
+
 
       Lesson 4 – Working with Compound Indexes in MongoDB
-              - 
+              - Index on multiple fields. Can be a multikey index if it includes an array field. Maximum of one array field per index
+                Support queries that match on the prefix of the index fields
+                The order of the fields in a compound index matters
+               The order of the fields matters when creating the index and the sort order. It is recommended to list the fields in the following order: Equality, Sort, and Range.
+
+                  Equality: field/s that matches on a single field value in a query
+                  Sort: field/s that orders the results by in a query
+                  Range: field/s that the query filter in a range of valid values
+           
+Ex. 
+db.customers.createIndex({
+  active:1, 
+  birthdate:-1,
+  name:1
+})           
+
+The following query includes an equality match on the active field, a sort on birthday (descending) and name (ascending), and a range query on birthday too
+
+db.customers.find({
+  birthdate: {
+    $gte:ISODate("1977-01-01")
+    },
+    active:true
+    }).sort({
+      birthdate:-1, 
+      name:1
+      })
+
+efficient index for this query
+
+db.customers.createIndex({
+  active:1, 
+  birthdate:-1,
+  name:1
+})
+
+db.customers.getIndexes()
+
+  --Check if an index is being used on a query
+
+db.customers.explain().find({
+  birthdate: {
+    $gte:ISODate("1977-01-01")
+    },
+  active:true
+  }).sort({
+    birthdate:-1,
+    name:1
+    })
+
+ -- Cover a query by the Index
+
+db.customers.explain().find({
+  birthdate: {
+    $gte:ISODate("1977-01-01")
+    },
+  active:true
+  },
+  {name:1,
+    birthdate:1, 
+    _id:0
+  }).sort({
+    birthdate:-1,
+    name:1
+    })
+
+
+
+Ex. 
+
+// create a compound index using the `account_holder`, `balance` and `account_type` fields:
+db.accounts.createIndex({
+  account_holder: 1,
+  balance: 1,
+  account_type: 1
+})
+
+// Use the explain method to view the winning plan for a query
+db.accounts.explain().find(
+  { account_holder: "Andrea", balance: { $gt: 5 } },
+  { account_holder: 1, balance: 1, account_type: 1, _id: 0 }
+).sort({ balance: 1 });
+
+
 
       Lesson 5 – Deleting MongoDB Indexes
-              - 
+              - Indexes improve performance. Indexes have a write cost. Too many indexes in a collection can affect system performance Delete unused or redundant indexes.
+              - Make sure the index is not being used. Deleting an index that's the only index supporting a query will affect the performance of the query.
+                Recreating an index takes time and resources. Hide the index before deleting it. - db.collection.hideIndex(<index>)
+              - db.collection.dropIndex(<index>). To delete use this
+              - multiple delete index: db.cpll.dropIndexes(['index1', 'index2', ...])
+
+Use getIndexes() to see all the indexes created in a collection. There is always a default index in every collection on _id field. This index is used by MongoDB internally and cannot be deleted.
+   db.customers.getIndexes()
+
+Delete an Index: Use dropIndex() to delete an existing index from a collection. Within the parentheses of dropIndex(), include an object representing the index key or provide the index name as a string.
+
+db.customers.dropIndex(
+  'active_1_birthdate_-1_name_1'
+)
+
+ -- Delete index by key:
+
+db.customers.dropIndex({
+  active:1,
+  birthdate:-1, 
+  name:1
+})
 
 
+ -- Delete Indexes
+Use dropIndexes() to delete all the indexes from a collection, with the exception of the default index on _id.
+
+db.customers.dropIndexes()
+
+ -- The dropIndexes() command also can accept an array of index names as a parameter to delete a specific list of indexes.
+
+db.collection.dropIndexes([
+  'index1name', 'index2name', 'index3name'
+  ])
