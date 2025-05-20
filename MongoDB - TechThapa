@@ -1,0 +1,38 @@
+• What is MongoDB?
+   OpenSource, Doc-oriented(document store/ db that store information in doc.) NoSQL db management system         
+   It is stored in JSON(JavaScript Object Notation)
+   Designed for flexibility,scalability, and performance in handling unstructured or semi-structured data. 
+   
+• More about MongoDB : created by 10gen later changed to MongoDB (2009). Humongous (big derived from this) - Mongo
+
+   # SQL vs MongoDB
+     - SQL (Structured query language): Stores data in table format (rows and columns) / db are relational dbs
+                                    suited for well-defined schemas and fixed data structures
+           Ex. E-commerce platform, HR Management(payrolls) etc
+               MySQL, PostgreSQL, Oracle
+  
+     - MongoDB: NoSQL db are non-relational database. They Provide flexibility in data storage, allows varied data types and structures.
+                Ideal for applications with dynamic or evolving data models.
+                CMS, Social media platforms, Gaming
+           Ex. MongoDB, Cassandra, Redis
+          Inside one collection we can have multiple documents
+
+• MongoDb Teminology and Advantages: 
+
+     Database -> Collections (we can have multiple documents) -> Students / teachers / Products (Collection) -> Student ka alag doc hota hai teacher ka alag there details etc.
+        it can be schemaless too
+      
+
+• Key Features:
+   #Flexible Schema Designs, Scalability and performance, Document oriented storage, Dynamic quries, aggregation framework, Open Source and community
+  
+•  How works? -> Frontend + Backend + DB (Storage Engine- to talk with Db and do crud operations) 
+        
+
+
+
+
+
+
+
+
