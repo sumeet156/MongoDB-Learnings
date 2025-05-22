@@ -17,7 +17,7 @@ This repository contains my personal notes and summaries while learning MongoDB 
 - Includes API basics, collections, environment variables, testing, and workflows.
 
 ## 🔗 Useful Links
-- [MongoDB University](https://university.mongodb.com/](https://learn.mongodb.com/pages/certification-learning-paths))
+- [MongoDB University](https://learn.mongodb.com/learn/learning-path/mongodb-nodejs-developer-path)
 - [Technical Thapa YouTube Channel](https://www.youtube.com/@TechnicalThapa](https://www.youtube.com/watch?v=rU9ZODw5yvU&t=1871s))
 - [Postman Student Expert Program](https://academy.postman.com/path/postman-api-fundamentals-student-expert)
 
