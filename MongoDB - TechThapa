@@ -26,8 +26,13 @@
 • Key Features:
    #Flexible Schema Designs, Scalability and performance, Document oriented storage, Dynamic quries, aggregation framework, Open Source and community
   
-•  How works? -> Frontend + Backend + DB (Storage Engine- to talk with Db and do crud operations) 
-        
+•  How works? -> Frontend + Backend + DB - MongoShell se bhi connect karke kar sakte hai (Storage Engine [Converts JSON to BSON]- to talk with Db and do crud operations)
+
+• JSON vs BSON :
+  - In MongoDB, we write in JSON format only but behind the scene data is stored in BSON (Binary JSON) format, a binary reprepntation of JSON.
+  - By utilizing BSON, MongoDB can achieve higher read and write speeds, reduced storage requirements, and improved data manipulation capabilities,
+  making it well-suited for handling large and complex datasets while maintaining performance efficiency.
+  - JSON is easy to read and write     
 
 
 
