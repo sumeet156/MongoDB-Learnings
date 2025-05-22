@@ -18,7 +18,7 @@ This repository contains my personal notes and summaries while learning MongoDB 
 
 ## 🔗 Useful Links
 - [MongoDB University](https://learn.mongodb.com/learn/learning-path/mongodb-nodejs-developer-path)
-- [Technical Thapa YouTube Channel](https://www.youtube.com/@TechnicalThapa](https://www.youtube.com/watch?v=rU9ZODw5yvU&t=1871s))
+- [Technical Thapa YouTube Channel](https://youtu.be/rU9ZODw5yvU?si=AQIamI48jZ-xtKbs)
 - [Postman Student Expert Program](https://academy.postman.com/path/postman-api-fundamentals-student-expert)
 
 -------------
