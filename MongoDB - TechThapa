@@ -34,10 +34,101 @@
   making it well-suited for handling large and complex datasets while maintaining performance efficiency.
   - JSON is easy to read and write     
 
+Managing Db and collections:
+  > show dbs;    -- to see the databases
+  > use <database-name>;   --to use the created db 
+  > db.dropDatabase();    -- to delete the db
+
+  > show collections;  
+  > db.createCollection('<collection-name>');      --to create collection
+  > db.<collection-name>.drop();  
+
+Open Cmd-> mongosh (enter) -> you created server of mogosh now you can run commands
+
+  - You wonlt see a database listed in the output of the show dbs command until that database contains at least one collection with data in it.
+  
 
 
+• Insert Operation in MongoDB
+  - Inserting Documents in MongoDB (single document): db.<collection-name>.insertOne({field:vlaue1, field2:value2, .... });
+ 
+ - Inserting Multiple Documents (Array of an obj [] in square brackets): db.<collection-name>.insertMany([
+                                    {fieldl: valuel, field2: value2, ...},
+                                    {fieldl: valuel, field2: value2, ...},
+                                    // .....
+                                 ]);
+
+  - When to use Quotes and when not to?
+    • Special Characters: If a field name contains special characters or spaces, or starts with a numeric digit, using quotes is necessary.
+    • Reserved Words: If a field name is a reserved keyword in MongoDB, use quotes distinguish it from the reserved keyword.
+
+ (Best Practice: Always use single or double qoutes)
 
 
+• Ordered and Unordered Inserts: hen executing bulk write operations, "ordered" and "unordered" determine the batch behavior.
+  - Ordered Inserts: Default behavior is ordered, where MongoDB stops on the first error.
+                     db.<coIIection-name>.insertMany([ docl, doc2, ... l);
+
+  - Unordered Inserts: When executing bulk write operations with unordered flag, MongoDB processing after encountering an error.
+                      db.<collection-name>.insertMany([ docl, doc2, ... J, { ordered: false });
+
+
+• Case Sensitivity in MongoDB:
+  - Collection names are case-sensitive.
+  - Field names within documents are also case-sensitive.
+        db.Product.insertOne({ name: 'summe', age: 30 });     -- Product database and 
+        db.product.insertOne({ name: 'summe', age: 30 });     -- product database are completely diff.
+
+
+• Read Operations in MongoDB: Reading Documents in MongoDB, Comparison Operators, Logical Operators, Cursors in MongoDB, Elements Operators
+
+  - Finding Documents in MongoDB: find() : db.collection_name.find({ key: value })     -- it will show all result in collection
+                                  findOne() : db.collection_name.findOne({ key: value })    -- it will show only one result 
+
+ 
+• Importing JSON in MongoDB: mongoimport jsonfile.json —d database_name —c collection_name
+  - mongoimport products.json -d shop -c products    (if json is not in array then do this)
+  - mongoimport products.json -d shop -c products —jsonArray        (if json is in array then do this)
+  
+  - mongoexport products.json -d shop -c products 
+
+(mongoimport and mongoexport are command-line utilities that are part of the MongoDB Database Tools. These tools are used for importing data into MongoDB (using mongoimport) and exporting data from MongoDB (using mongoexport)
+
+  - Limited to imports of 16 MB or smaller.
+
+
+• Comparison Operators:  db.collectionName.find({'fieldname': {$operator: value } })
+  -$eq : db.products.find({ 'price': { $eq: 699 } });
+
+  -$ne : db.products.find({ 'price': { $ne: 699 } });
+
+  -$gt : db.products.find({ 'price': { $gt: 699 } });
+
+  - $gte : db.products.find({ 'price': { $gte: 699 } });
+
+  -$lt : db.products.find({ 'price': { $lt: 699 } });
+
+  -$lte : db.products.find({ 'price': { $lte: 699 } });
+
+  -$in : db.category.find({price: { $in: [249, 129, 391]} });
+
+  -$nin : db.category.find({price: { $nin: [249, 129, 391]} });
+
+
+• Intro to Cursors: Cursors in MongoDB are used to efficiently retrieve large result sets from queries, providing control over the data retrieval process.
+  - MongoDB retrieves query results in batches using cursors.
+  - Cursors are a pointer to the result set on the server.
+  - Cursors are used to iterate through query results.
+
+ Automatic Batching: MongoDB retrieves query results in batches once.
+                     Default batch size is usually 101 docs  (then it shows enter it(iterate) for more docs)
+                     This improves memory efficiency and networking
+
+• Cursor Methods: 
+  - count() :
+  - limit() :
+  - skip() :
+  - sort() :
 
 
 
