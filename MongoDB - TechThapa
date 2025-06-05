@@ -125,10 +125,68 @@ Open Cmd-> mongosh (enter) -> you created server of mogosh now you can run comma
                      This improves memory efficiency and networking
 
 • Cursor Methods: 
-  - count() :
-  - limit() :
-  - skip() :
-  - sort() :
+  - count() : db.products.find({ price: { $gt: 250 } }).count();
+  - limit() : db.products.find({ price: { $gt: 250 } }).limit(5);
+  - skip() : db.products.find({ price: { $gt: 250 } }).limit(5).skip(2);
+  - sort() : db.products.find({ price: { $gt: 1250 } }'.limit(3).sort({price:1});                - (1) for ascending & (-1) for descending
+
+     Performance Implications
+       • skip() can be inefficient for large offsets.
+       • Using sort() on large result sets may impact performance.
+
+     Use with Caution
+       • Be cautious when using limit() and skip() on large collections.
+       • Consider using indexing to optimize query performance.
+
+
+
+• Logical Operators:
+  $and / $or / $nor: {$and: [{condition1}, {condition2}, ....] 
+    ex.: db.products.find({ $and: [{'price': {$gt:100}}, {'name': 'Diamond Ring'}] })                              // both doc are true
+         db.products.find({ $or: [{'price': {$gt:2000}}, {'name': 'Diamond Ring'}] })                              // atleast one doc is true
+         db.products.find({ $nor: [{'price': {$gt:2000}}, {'name': 'Diamond Ring'}] }).count(4)                    // both are not true
+
+  $not: {field:{ $not: {operator: value}}}
+    ex.: db.products.find({ 'price':{$not: {$eq:100}} })         // jiske price 100 nahi hai give that doc
+         db.products.find({ 'price':{$ne:100} }).count()
+
+
+• Complex Expressions:
+  The $expr operator allows using aggregation expressions within a query.
+  Useful when you need to compare fields from the same document in a more complex manner.
+
+Syntax: {$expr: {operator:[field,value]}}
+ Ex. db.product.find({$expr: {gt:['$price',1340]}});
+     db.sales.find({$expr: {$gt: [{$multiply: ['$quantity', '$price']}, '$targetPrice' ]} })               //if want to addition use add instead of Multiply
+
+
+• Elements Operator:
+  $exists: {field: {$exists: <boolean>}}         ex: db.products.find({ price: {$exists: true}})  | db.products.find({ price: {$exists: false}, price:{$gt:1250} })                        // use this to get no. of doc  .count()
+
+  $type: {field: {$type: <bson-data-type>}}     $type: The $type operator filters documents based on the BSON data type of a field
+     ex: db.products.find({ price: {$type: 'number'}})  | db.products.find({ price: {$type: 'string'}}) 
+
+  $size: {field: {$size: <array-length>}}  : $size: The $size operator matches documents where the size of an array field matches a specified value.
+     ex: db.comments.find({'comments':{$size:2}})        
+
+
+## • Projection: 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
