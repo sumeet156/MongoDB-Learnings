@@ -170,18 +170,164 @@ Syntax: {$expr: {operator:[field,value]}}
      ex: db.comments.find({'comments':{$size:2}})        
 
 
-## • Projection: 
+## • Projection: db.collection.find({}, {field1:1, field2: 1})
+                 db.comments.find({'comments': {$size:2}}, {title:1, _id:0})
+ 
+        • To include specific fields, use projection with a value of 1 for the fields you want.
+        • To exclude fields, use projection with a value of O for the fields you want to exclude.
+        • You cannot include and exclude fields simultaneously in the same query projection.
+
+
+• Managing Embedded Documents (Arrays and Objects): 
+    - Query documents inside embedded documents using dot notation.
+    - db.collection.find({ "parent.child": value })                  // parent then put . to get child and enter value
+    ex:   db.comments.find({"comments.user": 'Lily'})
+          db.comments.find({"comments.user": 'Henry' , "metadata.likes":{$gt:50}})
+
+
+• Comparing "$all" and "$elemMatch" Operators
+     • The $all operator selects the documents where the value of a field is an array that contains all the specified elements.
+          {<field>: { $all: [ <value1>, <value2> ... ] } }
+      db.comments.find({'comments.user': {$all: ['Alice' ,'Vinod']}})
+
+
+     • The $elemMatch operator matches documents that contain an array field least one element that matches all the specified query criteria.
+          {<field>: { $elemMatch: { <queryl>, <query2>, ... } } }
+      db.comments.find({'comments': {$elemMatch: {'user': 'Vinod' , 'text': 'Thanks you' } } } )
+ 
+
+
+• Update Operations in MongoDB 
+    1) updateOne() and updateMany(): If you write field name which is not exists then it will be created.
+
+       - updateOne(): 
+         db.collectionName.updateOne(
+                {filter},
+                {$set: {existingField: newValue, newfield: "new Value", //... }, }
+         );
+
+      db.products.find()
+  Ex: db.products.updateOne(
+         {_id: ObjectId("47fgbncyirgbf83ry9f")},
+         {$set: {'price': 45}} 
+       )
+
+      db.products.updateOne(
+         {name: 'Designer HandBag'} ,
+         {$set: {'isFeatured': false }} 
+       )
+
+
+
+       - updateMany(): // to update multiple document 
+         db.collectionName.updateMany(
+                {filter},
+                {$set: {existingField: newValue, //... }, }
+         );
+
+   Ex: db.products.updateMany(
+         {price:120} ,
+         {$set: {'isFeatured': true }} 
+       )
+   
+    2) Removing and Renaming Fields:
+
+       - Removing: db.collectionName.updateOne( {filter}, {$unset: {fieldName:1} });
+ 
+     Ex: db.products.updateOne(
+           {price:123}, 
+           {$unset: {'isFeature':1 } } 
+         );
+
+
+       - Renaming: db.collectionName.updateOne( {filter}, {$rename: {oldFieldName: "newFieldName"}} );
+
+     Ex: db.products.updateMany(
+           {price:123}, 
+           {$rename: {'isFeatured': 'isFeature'} } 
+         );
+
+
+    3) Updating arrays and Embedded Documents:
+       - $push:
+        db.coIlectionName.updateOne(
+          {filter},
+          {$push: {arrayField: "new element" } }
+         );
+
+  Ex: db.comments.updateOne(
+       {_id:5}, 
+       {$push: {'comments:{user:'Eva', text: 'Hi EveryOne'} } }
+      );
+    
+
+       - $pop:
+        db.coIlectionName.updateOne(
+          {filter},
+          {$pop: {arrayField: value } }
+         );
+
+  Ex: db.comments.updateOne(
+       {_id:5}, 
+       {$pop: {'comments': 1 } }
+      );
+
+
+       - $set:
+        db.coIlectionName.updateOne(
+          {filter},
+          {$set: {"arrayField.$.text": "Updated text" } }
+         );
+
+  Ex: db.comments.updateOne(
+       {_id:5}, 
+       {$set: {'user':'Summe'} }
+      );
+
+      db.comments.updateOne(
+       {_id:7, 'comments.user': 'Alice'}, 
+       {$set: {'comments.$.text':'Awesome Summe'} }              // $ is positional operator its a index number
+      );
+
+
+    4) Delete Operations in MongoDB:
+       - deleteOne: use to delete single doc.
+       db.collectionName.deleteOne({ filter });
+
+  Ex: db.comments.deleteOne({_id:1});
+
+
+       - deleteMany: use to delete multiple
+       db.collectionName.deleteMany({ filter });
+
+  Ex: db.products.deleteMany({price:55})
 
 
 
 
+## • Indexes in MongoDB:
+
+    What are Indexes?
+  - Indexes are specialized data structures that optimize Qata retrieval speed in MongoDB.
+  - Indexes store a fraction of data in a more searchable format.
+  - They enable MongoDB to locate data faster during queries.
+  - Indexes are separate from collections and multiple indexes can exist per collection.
+
+    Benefits of Indexes
+  - Faster Querying: Indexes drastically accelerate data retrieval, particularly for large collections.
+  - Efficient Sorting: Indexes facilitate rapid sorting based on specific fields.
+  - Improved Aggregation: Aggregation operations become more efficient with optimized indexes.
+  - Indexing on Multiple Fi ds: Complex queries ca be executed efficiently by utilizing multiple fields in indexes.
+
+
+  • explain(): Use explain() method to understand query execution in detail.
+     - syntax: db.products.find({ name: 'Air Fryer' }).explain();
+               db.products.find({ name: 'Air Fryer' }).explain("executionStats");       //Use it to measure the time taken to execute a query.
 
 
 
-
-
-
-
+• Managing Indexes: 3:04 hrs
+    
 
 
 
