@@ -326,10 +326,55 @@ Syntax: {$expr: {operator:[field,value]}}
 
 
 
-• Managing Indexes: 3:04 hrs
-    
+• Managing Indexes: 
+     - db.products.createIndex({ field: 1 });
+         (1) for storing indexes in ascending order.
+         (-1) for storing indexes in descending order.
+      ex: db.products.createIndex({ 'name':1 })
+          db.users.createIndex({ email:1 }, { unique: true })
+
+    Getting Indexes: Did you realize that _id is already there _id is automatically added by mongodb and it's a default unique index.
+     - db.collection.getIndexes();
+          _id is a default index.
+
+     - db.collection.dropIndex({ field: 1 });
+       db.products.dropIndex({ 'name':1 })   
+
+     - db.collection.dropIndex("index_name");
+
+Unique and Text Indexes: 
+     - db.collection.createIndex({ field: 1 }, { unique: true });
+     - db.collection.createIndex({ field: "text" });
+     - db.collection.find({ $text: { $search: "keyword" } });
+           Searching using index is faster than $regex searching.
+           db.products.find({ field: { $regex: "air" } })
+
+when not to use Indexes? 
+Indexes on Rarely Used Fields: Indexing fields that are seldom used in queries can consume unnecessary space and resources.
+Balancing Act: Indexing requires disk space and memory. Overindexing can lead to resource strain and impact overall performance.
+Indexing Small Collections: In smaller collections, the cost of index maintenance might outweigh the benefits gained from querying.
 
 
+
+⁘ • Mastering the Aggregation Framework in MongoDB:
+         What is Aggregation?
+         -> Aggregation is the process of performing transformations on documents and combining them to produce computed results.
+            Pipeline Stages: Aggregations consist of multiple pipeline stages, each performing a specific operation on the input data.
+            Benefits: Aggregating Data: Complex calculations and operations are possible.
+                      Advanced Transformations: Data can be combined, reshaped, and computed for insights.
+                      Efficient Processing: Aggregation handles large datasets efficiently.
+ 
+        $match: The $match stage is similar to the query used as the first argument in .find(). It filters documents based on specified conditions.
+                 syntax: { $match: { <query> } }
+                 ex: db.products.aggregate([
+                                 { $match: { company: "7439fnciry9nca9r89" }}
+                     ]);
+
+
+        $group: 
+                 syntax: 
+                 ex: 
+3.23
 
 
 
