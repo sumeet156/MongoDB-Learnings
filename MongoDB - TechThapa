@@ -371,10 +371,21 @@ Indexing Small Collections: In smaller collections, the cost of index maintenanc
                      ]);
 
 
-        $group: 
+        $group: The $group stage groups documents by specified fields and performs aggregate operations on grouped data.
                  syntax: 
-                 ex: 
-3.23
+                   {
+                     $group:
+                       {
+                        _id:<expression>, //grp key
+                        <field>:{<accumulator1>:<expression1>}, ...
+                        }
+                    }
+
+                 ex: db.products.aggregate([
+                          $group:{_id: {comp: "$company" }, totalProducts: { $sum: 1} } }
+                     ]);
+                 This groups products by company and calculates the total number of products for each company.
+
 
 
 
