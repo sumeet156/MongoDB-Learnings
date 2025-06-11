@@ -452,22 +452,84 @@ Indexing Small Collections: In smaller collections, the cost of index maintenanc
                      {$project: {name:1, numberOfColors: {$size: "$colors"}}}
          ]);
    
+        db.products.aggregate([
+             {$match: { price: { $gt: 1200 }}},
+             { $unwind: "$colors"},
+             { $group: {
+                 _id: { priceGroup: "$price"},
+                 colors: { $addToSet: "colors"},
+                 colorLength: { $size: "$colors"}           // shows error becz $size is not used in $group opeator
+                },
+              },
+            ]};
+       // we can 't do this, bc z the $size operator is not allowed directly within the $group stage. Instead, you can use it in combination .vith
+          other aggregation operators or in separate pipeline stages.
+
+        db.products.aggregate([
+             {$match: { price: { $gt: 1200 }}},
+             { $unwind: "$colors"},
+             { $group: {
+                 _id: { priceGroup: "$price"},
+                 colors: { $addToSet: "colors"},
+                },
+              },
+              { $project: {
+                   _id:1,
+                   colors:1,
+                   colorLength: {$size: "$colors"},
+                  }
+               }
+            ]};              // this is how its done with other opeator
+
        Projects the name field and calculates the number of colors in the colors array.
 
 
- 4.0
+       • $limit and $skip: The $limit and $skip stages are useful for pagination, limiting, and skipping results.
+                           {$limit: <positive integer> }
+                  db.products.aggregate([
+                             { $skip:10},
+                             { $limit:10}
+                    ]);
+ 
+       • $filter: The $filter stage filters elements of an array based on specified conditions.
+                  { $project: { <field>: { $filter: { input: '$<array>', as '<variable>' cond: <expression> } } } }
+
+          db.col.aggregate([
+                { $project: {
+                     name:1,
+                     summeValue: {
+                         $filter:{
+                             input: '$values',
+                             as: 'val',
+                             cond: {$gt: ['$$val',30]}     // $$ double represents the val is value
+                         }
+                     }
+                 }
+          }])
+       
+
+
+### Here the aggregation end (you can refer to MongoDb Doc. for more detailed info)
 
 
 
+## Intro to MongoDB Atlas:
+     -MongoDB Atlas is MongoDB's fully managed cloud database service.
+     -It offers an easy way to deploy, manage, and scale MongoDB databases in the cloud.
+     -Atlas eliminates the need for manual setup and maintenance, allowing developers to focus on their applications.
+     -It provides automated scaling options to accommodate growing workloads.
+     -Atlas supports global clusters, enabling databases to be deployed across multiple regions better data availability and reduced latency.
 
+### MongoDB Atlas Setup:
+       Clusters in MongoDB: In MongoDB, a cluster refers to a group of interconnected servers (nodes) that work together to store and manage data. (Horizontal Scaling one fails other is active)
+       You can use MongoDB Compass or Mongosh Shell to fetch update delete perfom query on the DB
 
+After this comes, 
+Drivers (Backend): node.js, php, cpp, Java, ts, rust etc 
+    -Software libraries that allow applications to interact with MongoDB databases.
+    -Drivers provide APIs tailored to specific programming languages.
 
-
-
-
-
-
-
+4.40
 
 
 
