@@ -364,14 +364,14 @@ Indexing Small Collections: In smaller collections, the cost of index maintenanc
                       Advanced Transformations: Data can be combined, reshaped, and computed for insights.
                       Efficient Processing: Aggregation handles large datasets efficiently.
  
-        $match: The $match stage is similar to the query used as the first argument in .find(). It filters documents based on specified conditions.
+        • $match: The $match stage is similar to the query used as the first argument in .find(). It filters documents based on specified conditions.
                  syntax: { $match: { <query> } }
                  ex: db.products.aggregate([
                                  { $match: { company: "7439fnciry9nca9r89" }}
                      ]);
 
 
-        $group: The $group stage groups documents by specified fields and performs aggregate operations on grouped data.
+       • $group: The $group stage groups documents by specified fields and performs aggregate operations on grouped data.
                  syntax: 
                    {
                      $group:
@@ -385,6 +385,139 @@ Indexing Small Collections: In smaller collections, the cost of index maintenanc
                           $group:{_id: {comp: "$company" }, totalProducts: { $sum: 1} } }
                      ]);
                  This groups products by company and calculates the total number of products for each company.
+         - The $group stage can calculate various aggregate values within grouped data.
+               db.products.aggregate([ 
+                          { $group: { _id: { comp: "$company" }, totalprice: { $sum: "$price"}, totalProducts: { $sum: 1}, averagePrice: { $avg: "$price"} }}
+               ]);
+
+
+       • $sort: 
+           { $sort: {<field>: <order> }}  // order means 1 or -1 
+
+           db.products.aggregate([
+               { $sort: { totalProducts: 1}} 
+           ]}
+
+       • $project: The $project stage reshapes documents, includes or excludes fields, and performs operations on fields.
+                   { $project: { <field1>: <expression1>, ... }}
+           
+            db.products.aggregate([ 
+                        { $projects: {name:1, discountedPrice: {$subtract: ["price", 5] }}}
+            ]);
+ 
+         Projects the name field and calculates a discountedPrice field by subtracting 5 from the price.
+         $sum, $subtract, $multiply, $avg, etc. are types of expression operator.
+
+       • $push: The $push stage adds elements to an array field within documents.
+                { $push: <expression> }
+           db.products.aggregate([
+                   { $group: { _id: { company: "$company" }, products: { $push: "$name"} } }
+           ]};
+
+           db.products.aggregate([
+               { $match: {price: { $gt: 1200}}},
+               { $group: {
+                      _id: "$price",
+                      allColors: {$push: "$colors"}
+                  }
+                }
+            ])                         // it creates array inside arrays so we use unwind
+                      
+       • unwind: The $unwind stage deconstructs an array field and produces multiple documents.
+                 { $unwind: <array> }
+
+            db.products.aggregate([
+                   { $unwind: "$colors" },
+                   { $group: { _id: {company: "$company"}, products: {$push:"$colors"} }}
+            ]);                      // this solves array problem but gives duplicate data in array to get rid we use $addToSet
+
+         Deconstructs the colors array field, groups products by company, and creates an array of colors for company.
+     
+
+      •  $addToSet: The $addToSet stage adds elements to an array field while preventing duplicates.
+                    db.products.aggregate([|
+                        {$unwind:"$colors"},
+                        {$group: {
+                                    _id: {company: "$company"},
+                                    products: {$addToSet: "$colors"}
+                        } }
+                    ])
+
+            Groups products by company and creates an array of unique colors for each company.
+
+
+      • $size: The $size stage calculates the length of an array field.
+               { $size: <array> }
+          db.products.aggregate([
+                     {$project: {name:1, numberOfColors: {$size: "$colors"}}}
+         ]);
+   
+       Projects the name field and calculates the number of colors in the colors array.
+
+
+ 4.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
