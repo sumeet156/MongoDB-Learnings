@@ -29,7 +29,7 @@ Lesson 1: Foundations of MongoDB:
 
 
 Lesson 2: MongoDB Architecture: a) Document(smallest unit in MongoDB) Obj and any related metadata, Field-value pairs, Data types: strings,num, dates, arrays,objectt and more.
-                        b) Collection: is a grp of Documents taht correspond to an entity. Cam support multiple entities and diff. shapes.
+                        b) Collection: is a grp of Documents taht correspond to an entity. Can support multiple entities and diff. shapes.
                         c) Database: A grp of collections
                         d) Nodes: Individual MongoDB Instance(Physical machine Virtual machine container)
                         e) Cluster: is grp of MongoDB Nodes: Types- i) Replica Set: High Availability by Replicating 
@@ -40,7 +40,7 @@ Lesson 2: MongoDB Architecture: a) Document(smallest unit in MongoDB) Obj and an
           2.CAP Theorem: Impossible to simultaneously consistency, avaiability and Partition tolerance.
               • Consistency: Every read receives the most recent write or an error.
               • Availability: Every Request(read or write) receives a response even if might not most recent or correct data.
-              • Patition Tolerance: System continues to function despite network partitions.
+              • Partition Tolerance: System continues to function despite network partitions.
 
             In this distributed db any 2 is done.
 
@@ -69,18 +69,6 @@ Lesson 4: Deploying an Atlas Cluster: Organizations- Grp and define users and te
           
 
 • Getting Started with MongoDB Atlas: Get hands dirt with UI  
-
-
-Unit 03: Connecting to a MongoDB Database
-Unit 04: MongoDB CRUD Operations: Insert and Find Documents
-Unit 05: MongoDB CRUD: Replace and Delete
-Unit 06: MongoDB CRUD Operations: Modifying Query Results
-Unit 07: MongoDB Aggregation
-Unit 08: MongoDB Indexing
-Unit 09: MongoDB Atlas Search
-Unit 10: Introduction to MongoDB Data Modeling
-Unit 11: MongoDB Transactions
-
 
 
 
