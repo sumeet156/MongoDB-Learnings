@@ -529,7 +529,29 @@ Drivers (Backend): node.js, php, cpp, Java, ts, rust etc
     -Software libraries that allow applications to interact with MongoDB databases.
     -Drivers provide APIs tailored to specific programming languages.
 
-4.40
+ • Getting Started with Node.js MongoDB Driver
+    -Connect to MongoDB Server: Use the class and a valid URI to establish a connection to the MongoDB server.
+    -Select a Database: Access a specific database using the client.db(databaseName) method
+    -Access a Collection Retrieve a collection reference using the db.collection(colectionName) method.
+    -Perform Operations: Perform CRUD operations like querying, inserting, updating, and deleting documents within the collection
+    -Close Connection: Safely close the connection using the client.close() method when done
+
+Why Mongoose instead of official driver?
+
+• Mongoose: It's an Object Data Modeling (ODM) library for MongoDB and Node.js.
+          It makes MongoDB interaction more straightforward and organized.
+          It provides a structured, schema-based data modeling approach.
+
+     Structured Schemas: Mongoose lets you define your data's structure using schemas which makes it easier to understand your database structure and work with it.
+     Validation: Mongoose provides built-in validation to ensure validity before saving it to database
+     Relationships: MongoDB doesn't provide relations itself. So Mongoose helps to replicate relations in MongoDB and helps us to relate schemas with each other easily (one-to- one, one-to-many, etc.)
+     Middleware: Mongoose offers running custom functions before or after certain operations which can be useful in many cases.
+     Complex Queries: MongoDB helps to write complex queries, aggregations, etc. with simpler syntax to help us to work on projects easily
+
+Install: npm i mongoose 
+         (use mongoose docs for reference to code)
+         once installed you can perform your code in respective file(CRUD Operation)
+         
 
 
 
@@ -539,51 +561,4 @@ Drivers (Backend): node.js, php, cpp, Java, ts, rust etc
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Thanks for Reading (Completed Successfully)
