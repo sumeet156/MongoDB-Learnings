@@ -7,7 +7,7 @@
                                    filter: A query that matches the document to replace.
                                    replacement: The new document to replace the old one with.
                                    options: An object that specifies options for the update.
-                                Ex. db.books.replaceOne(_id: ObjectId("6474anjhh74bc80"),} )
+                                Ex. db.books.replaceOne({_id: ObjectId("6474anjhh74bc80")} )
                                     
                                     db.birds.findOne({ common_name: "Northern Cardinal" })
                                   -> db.birds.replaceOne(
@@ -26,7 +26,7 @@
                    - updateOne() : The updateOne() method accepts a filter document, an update document, and an optional options object. MongoDB provides update operators and options to help you update documents.
                    In this section, we'll cover three of them: $set, upsert, and $push.
 
-                - Update operators: • $set - The $set operator replaces the value of a field with the specified value, as shown in the following code:
+                - Update operators:## • $set - The $set operator replaces the value of a field with the specified value, as shown in the following code:
                    db.podcasts.updateOne(
                    {
                      _id: ObjectId("5e8f8f8f8f8f8f8f8f8f8f8"),
@@ -39,17 +39,17 @@
                     } 
                  )           
 
-                                   • upsert:The upsert option creates a new document if no documents match the filtered criteria. (koi new doc. ya phir new field jo doc me nahi hai insert karne ko use karte hai)
+                                 ##  • upsert:The upsert option creates a new document if no documents match the filtered criteria. (koi new doc. ya phir new field jo doc me nahi hai insert karne ko use karte hai)
                   db.podcasts.updateOne(
                   { title: "The Developer Hub" },
                   { $set: { topics: ["databases", "MongoDB"] } },
                   { upsert: true }
                   )
 
-                                   • $push: The $push operator adds a new value to the hosts array field.
+                                ##   • $push: The $push operator adds a new value to the hosts array field.
                   db.podcasts.updateOne(
                   { _id: ObjectId("5e8f8f8f8f8f8f8f8f8f8f8") },
-                  { $push: { hosts: "Nic Raboy" } }
+                  { $push: { hosts: "Nice Raboy" } }
                   )
                           
 
